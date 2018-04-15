@@ -1,0 +1,93 @@
+<body>
+<script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/prop-types@15.6.0/prop-types.js"></script>
+<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+<div id="container"></div>
+
+<style>
+      p.noactive{
+          display:none;
+      }
+</style>
+
+<script type="text/babel">
+  const articles = [
+    {id:111, title: "Title111", description:"Description111"},
+    {id:222, title: "Title222", description:"Description222"},
+    {id:333, title: "Title333", description:"Description333"},
+    {id:444, title: "Title444", description:"Description444"},
+  ]
+
+  var prevArticleNode;
+
+  const ArticleList = ({ articles }) => {
+    console.log(articles);
+    const articleElements = articles.map((article)=> 
+      <li key={article.id}><Article title={article.title} description={article.description} id={article.id}/></li>
+      )
+
+    return (
+      <ul>
+        {articleElements}
+      </ul>
+    )
+  }
+
+  class Article extends React.Component {
+    state = {
+      className: "noactive"
+    }
+
+    handleClick = () => {
+
+      if (prevArticleNode
+          && (this.rootNode.getAttribute("id") != prevArticleNode.getAttribute("id"))){
+
+          if (prevArticleNode.className == "")
+              prevArticleNode.className = "noactive";
+      }
+
+
+      prevArticleNode = this.rootNode;
+
+      this.setState((prevState) => {
+        const {className} = prevState;
+
+        return {
+           className: (className == "") ? "noactive" : ""
+        }
+      });
+    }
+
+    render(){
+      const {title, description, id} = this.props;
+      const {className} = this.state;
+
+      return (
+        <section>
+          <h2 onClick={this.handleClick}>{title}</h2>
+          <p
+              className={className}
+              id={id}
+              ref={node => (this.rootNode = node)}>
+              {description}
+          </p>
+        </section>
+      )
+    }
+  }
+
+
+
+  function renderAccordion()
+  {
+    console.log("renderAccordion");
+    ReactDOM.render(
+      <ArticleList articles={articles}/>, 
+      document.getElementById('container')
+    )
+  }
+  renderAccordion()
+</script>
+</body>
