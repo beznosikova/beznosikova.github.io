@@ -9,6 +9,9 @@
       p.noactive{
           display:none;
       }
+      p.active{
+          display:block;
+      }
 </style>
 
 <script type="text/babel">
@@ -19,66 +22,55 @@
     {id:444, title: "Title444", description:"Description444"},
   ]
 
-  var prevArticleNode;
-
-  const ArticleList = ({ articles }) => {
-    console.log(articles);
-    const articleElements = articles.map((article)=> 
-      <li key={article.id}><Article title={article.title} description={article.description} id={article.id}/></li>
+  const Article = ({title, description, visibilityClass, id, func}) => {
+      return (
+          <section>
+              <h2 onClick={()=>func(id)}>{title}</h2>
+              <p className={visibilityClass}>
+                  {description}
+              </p>
+          </section>
       )
-
-    return (
-      <ul>
-        {articleElements}
-      </ul>
-    )
   }
 
-  class Article extends React.Component {
-    state = {
-      className: "noactive"
-    }
 
-    handleClick = () => {
+  class ArticleList extends React.Component {
 
-      if (prevArticleNode
-          && (this.rootNode.getAttribute("id") != prevArticleNode.getAttribute("id"))){
-
-          if (prevArticleNode.className == "")
-              prevArticleNode.className = "noactive";
+      constructor(props) {
+          super(props);
+          this.state = {
+              activeId: null
+          }
+          this.handleClick = this.handleClick.bind(this);
+        }
+      handleClick(id){
+          this.setState(prevState => ({
+              activeId: (prevState.activeId != id) ? id : null
+          }));
       }
 
-
-      prevArticleNode = this.rootNode;
-
-      this.setState((prevState) => {
-        const {className} = prevState;
-
-        return {
-           className: (className == "") ? "noactive" : ""
+        render () {
+          const {activeId} = this.state;
+          return (
+                <ul>
+                    {
+                        articles.map((article)=>
+                            <li key={article.id}>
+                                <Article
+                                    title={article.title}
+                                    description={article.description}
+                                    visibilityClass={(activeId != article.id) ? "noactive" : "active"}
+                                    id={article.id}
+                                    func = {this.handleClick}
+                                />
+                            </li>
+                        )
+                    }
+                </ul>
+            )
         }
-      });
-    }
 
-    render(){
-      const {title, description, id} = this.props;
-      const {className} = this.state;
-
-      return (
-        <section>
-          <h2 onClick={this.handleClick}>{title}</h2>
-          <p
-              className={className}
-              id={id}
-              ref={node => (this.rootNode = node)}>
-              {description}
-          </p>
-        </section>
-      )
-    }
   }
-
-
 
   function renderAccordion()
   {
