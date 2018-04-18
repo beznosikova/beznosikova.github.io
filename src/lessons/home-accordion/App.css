@@ -1,0 +1,6 @@
+p.noactive{
+  display:none;
+}
+p.active{
+  display:block;
+}

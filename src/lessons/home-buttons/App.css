@@ -1,0 +1,39 @@
+#container{
+  width: 400px;
+  margin: auto;
+}
+
+.btn {
+  border: 1px solid #cbc0c0;
+  color: #fff;
+  margin-bottom: 20px;
+  text-align: center;
+  padding-top: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+}
+
+.btn--large {
+  width: 180px;
+  height: 50px;
+  font-size: 30px;
+}
+
+.btn--medium {
+  width: 120px;
+  height: 30px;
+  font-size: 18px;
+}
+
+.btn--small {
+  width: 70px;
+  height: 30px;
+  padding-top: 10px;
+}
+.theme-red {
+  background-color: #e56c85;
+}
+.theme-blue {
+  background-color: #097fbe;
+}
