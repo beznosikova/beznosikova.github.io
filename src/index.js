@@ -7,7 +7,7 @@ import { createStore } from "redux";
 
 
 function playlist(state = [], action) {
-	console.log(action);
+
   if (action.type === "ADD_TRACK" && action.payload.title.trim() != "") {
     return [...state, action.payload];
   }
@@ -18,7 +18,6 @@ function playlist(state = [], action) {
   }
 
   if (action.type === "EDIT_TRACK") {
-  	console.log(action.payload);
   	state[action.payload.id]["title"] = action.payload.title;
 
     return [...state];
