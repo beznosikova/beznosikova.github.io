@@ -19,6 +19,7 @@ const lessons = [
   { id: "13-Routers" },
   { id: "home-accordion" },
   { id: "home-buttons" },
+  { id: "home-redux" },
 ];
 
 lessons.forEach(l => (l.Component = require(`./lessons/${l.id}/App`).default));

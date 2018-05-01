@@ -1,14 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-
+import React from "react";
+import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import App from "./App";
+import "./index.css";
+
 import { createStore } from "redux";
 
-
 function playlist(state = [], action) {
-	console.log(action);
-  if (action.type === "ADD_TRACK" && action.payload.title.trim() != "") {
+  if (action.type === "ADD_TRACK") {
     return [...state, action.payload];
   }
   if (action.type === "DELETE_TRACK") {
@@ -16,18 +15,11 @@ function playlist(state = [], action) {
 
     return [...state];
   }
-
-  if (action.type === "EDIT_TRACK") {
-  	console.log(action.payload);
-  	state[action.payload.id]["title"] = action.payload.title;
-
-    return [...state];
-  }
-
   return state;
 }
 
 const store = createStore(playlist);
+console.log(store.getState());
 ReactDOM.render(
   <Provider store={store}>
     <App />
