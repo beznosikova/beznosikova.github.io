@@ -1,0 +1,86 @@
+<body>
+<script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/prop-types@15.6.0/prop-types.js"></script>
+<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+<div id="container"></div>
+
+<style>
+      p.noactive{
+          display:none;
+      }
+      p.active{
+          display:block;
+      }
+</style>
+
+<script type="text/babel">
+  const articles = [
+      {id:111, title: "Title111", description:"Description111"},
+      {id:222, title: "Title222", description:"Description222"},
+      {id:333, title: "Title333", description:"Description333"},
+      {id:444, title: "Title444", description:"Description444"},
+      {id:555, title: "Title555", description:"Description555"},
+  ]
+
+  const Article = ({title, description, visibilityClass, id, func}) => {
+      return (
+          <section>
+              <h2 onClick={()=>func(id)}>{title}</h2>
+              <p className={visibilityClass}>
+                  {description}
+              </p>
+          </section>
+      )
+  }
+
+
+  class ArticleList extends React.Component {
+
+      constructor(props) {
+          super(props);
+          this.state = {
+              activeId: null
+          }
+          this.handleClick = this.handleClick.bind(this);
+        }
+      handleClick(id){
+          this.setState(prevState => ({
+              activeId: (prevState.activeId != id) ? id : null
+          }));
+      }
+
+        render () {
+          const {activeId} = this.state;
+          return (
+                <ul>
+                    {
+                        articles.map((article)=>
+                            <li key={article.id}>
+                                <Article
+                                    title={article.title}
+                                    description={article.description}
+                                    visibilityClass={(activeId != article.id) ? "noactive" : "active"}
+                                    id={article.id}
+                                    func = {this.handleClick}
+                                />
+                            </li>
+                        )
+                    }
+                </ul>
+            )
+        }
+
+  }
+
+  function renderAccordion()
+  {
+    console.log("renderAccordion");
+    ReactDOM.render(
+      <ArticleList articles={articles}/>, 
+      document.getElementById('container')
+    )
+  }
+  renderAccordion()
+</script>
+</body>

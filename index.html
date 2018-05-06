@@ -1,0 +1,97 @@
+<body>
+<script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/prop-types@15.6.0/prop-types.js"></script>
+<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+<div id="container"></div>
+
+<style>
+    #container{
+      width: 400px;
+      margin: auto;
+    }
+
+    .btn {
+      border: 1px solid #cbc0c0;
+      color: #fff;
+      margin-bottom: 20px;
+      text-align: center;
+      padding-top: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+    }
+
+    .btn--large {
+      width: 180px;
+      height: 50px;
+      font-size: 30px;
+    }
+
+    .btn--medium {
+      width: 120px;
+      height: 30px;
+      font-size: 18px;
+    }
+
+    .btn--small {
+      width: 70px;
+      height: 30px;
+      padding-top: 10px;
+    }
+    .theme-red {
+      background-color: #e56c85;
+    }
+    .theme-blue {
+      background-color: #097fbe;
+    }
+
+</style>
+
+<script type="text/babel">
+    const Btn = ({
+      theme = 'red',
+      size,
+      className = '',
+      ...rest
+    }) => {
+      const sizeClassName = size ? `btn--${size}` : '';
+      return (
+        <a
+          className={`btn ${className} ${sizeClassName} theme-${theme}`}
+          {...rest}
+        />
+      )
+    };
+    const element = (
+      <div>
+        <Btn 
+          size="small"
+          theme="blue"
+          href="https://symfony.com"
+        >
+          small btn
+        </Btn>
+        <Btn
+          size="medium"
+          theme="red"
+          href="https://learn.javascript.ru"
+          target="_blanck"
+        >
+          medium box
+        </Btn>
+        <Btn
+          size="large"
+          theme="blue"
+        >
+          large box
+        </Btn>
+      </div>
+    );
+
+    ReactDOM.render(
+      element,
+      document.getElementById('container')
+    );
+</script>
+</body>
